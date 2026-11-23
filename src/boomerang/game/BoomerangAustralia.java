@@ -72,11 +72,12 @@ public final class BoomerangAustralia {
         for (int i = 0; i < drafts; i++) {
             passHands(step);                                            // rule 6
             for (Player player : players) {
-                Card card = player.draftCard();                         // rule 7
-                listener.cardDrafted(player, card);
+                player.draftCard();                                     // rule 7: choose first...
             }
+            listener.draftStepCompleted(i, players);                    // rules 7-8: ...then show to everyone
         }
         passLastCards(step);                                            // rule 9
+        listener.catchCardsShown(players);
         scoreRound(round);                                              // rule 10
         listener.roundScored(round, players);
     }
